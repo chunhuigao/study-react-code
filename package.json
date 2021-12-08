@@ -1,0 +1,23 @@
+{
+  "name": "study-react-code",
+  "version": "1.0.0",
+  "description": "## 学习react",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chunhuigao/study-react-code.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chunhuigao/study-react-code/issues"
+  },
+  "homepage": "https://github.com/chunhuigao/study-react-code#readme",
+  "dependencies": {
+    "react": "^17.0.2"
+  }
+}
