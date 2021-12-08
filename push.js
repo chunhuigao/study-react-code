@@ -10,7 +10,7 @@ if (!shell.which('git')) {
 // shell.exec('git add index.js')
 // shell.exec('git commit -m "使用nodejs自动执行git"')
 function start() {
-  var code = shell.exec('git push origin master').code
+  var code = shell.exec('git push origin main').code
   if (code === 0) {
     shell.exit(1)
   } else {
