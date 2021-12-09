@@ -5,7 +5,7 @@ import './index.css'
 
 function App() {
   return (
-    <div>
+    <div className="nanjing">
       <h2>测试</h2>
     </div>
   )
