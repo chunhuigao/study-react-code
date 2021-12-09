@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import MyReactDom from './MyReact15/react-dom'
 import './index.css'
 
 function App() {
@@ -9,9 +10,4 @@ function App() {
     </div>
   )
 }
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-)
+MyReactDom.render(<App />, document.getElementById('root'))
