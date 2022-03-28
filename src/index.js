@@ -1,13 +1,18 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import MyReactDom from './MyReact15/react-dom'
-import './index.css'
-
-function App() {
+import React from "react"
+import ReactDOM from "react-dom"
+import Home from "./Home/index.jsx"
+import List from "./List/index.tsx"
+import "./utils/style/index.scss"
+import "antd/dist/antd.less"
+export default function Index() {
   return (
-    <div className="nanjing">
-      <h2>测试</h2>
+    <div>
+      我是react <Home />
+      <List />
     </div>
   )
 }
-MyReactDom.render(<App />, document.getElementById('root'))
+
+const root = document.getElementById("root")
+// root.textContent = "webpackwqewq2"
+ReactDOM.render(<Index />, root)
