@@ -60,7 +60,7 @@
 找到 react-17.0.2 文件
 SchedulerHostConfig.js
 
-```git
+```github
 // invariant(false, 'This module must be shimmed by a specific renderer.');
 + export * from './forks/ReactFiberHostConfig.dom'
 
