@@ -1,108 +1,67 @@
----
-theme: channing-cyan
----
 ## 前言
 
-[上一章：从零搭一个极简版 webpack+React 工程（五）](https://juejin.cn/post/7076818753597472798)
+一个学习 react 源码的配置教程
 
-经过一番折腾，作者已经简单搭建出一个 webpack + react + TS 的工程；现在定义一下代码风格。毕竟团队工作，良好的代码风格还是可以帮助提高一下团队效率的。
+- react 版本 17.0.2
+- 时间：2022.03.28
 
-## 安装 eslint
+## 初始化
 
-### 全局安装 eslint
+### 修改 webpack.common.js
 
-```shell
-npm i eslint -g
-```
-
-### 配置文件初始化
-
-```shell
-eslint --init
-```
-
-`How would you like to use ESLint?`
-
-- To check syntax only
-- To check syntax and find problems
-- `To check syntax, find problems, and enforce code style`
-
-`What type of modules does your project use?`
-
-- `JavaScript modules (import/export)`
-- CommonJS (require/exports)
-- None of these
-
-`Which framework does your project use? `
-
-- `React`
-- Vue.js
-- None of these
-
-`Does your project use TypeScript?`
-
-- `Yes`
-- No
-
-`Where does your code run? `
-
-- `Browser`
-- `Node`
-
-`How would you like to define a style for your project? `
-
-- `Use a popular style guide`
-- Answer questions about your style
-
-`Which style guide do you want to follow?`
-
-- `Airbnb: https://github.com/airbnb/javascript`
-- Standard: https://github.com/standard/standard
-- Google: https://github.com/google/eslint-config-google
-- XO: https://github.com/xojs/eslint-config-xo
-
-`What format do you want your config file to be in?`
-
-- `JavaScript`
-- YAML
-- JSON
-
-等待 eslint 安装
-
-`Would you like to install them now with npm?`
-
-- `Yes`
-- No
-
-漫长的等待,当看到这句话 eslint 安装完成
-
-`Successfully created .eslintrc.js file in `
-
-### 默认 eslint 配置
-
-安装完 eslint 根目录会生成 .eslintrc.js 这个文件
+配置别名
 
 ```js
-module.exports = {
-  env: {
-    browser: true,
-    es2021: true,
-  },
-  extends: ['plugin:react/recommended', 'airbnb'],
-  parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
+ resolve: {
+    alias: {
+      react: path.join(__dirname, '../react-17.0.2/packages/react'),
+      shared: path.join(__dirname, '../react-17.0.2/packages/shared'),
+      'react-dom': path.join(__dirname, '../react-17.0.2/packages/react-dom'),
+      scheduler: path.join(__dirname, '../react-17.0.2/packages/scheduler'),
+      'react-reconciler': path.join(
+        __dirname,
+        '../react-17.0.2/packages/react-reconciler'
+      ),
     },
-    ecmaVersion: 'latest',
-    sourceType: 'module',
   },
-  plugins: ['react'],
-  rules: {},
-};
 ```
 
-## 安装 @types/react @types/react-dom
+支持 flow 语法
 
-```shell
-npm i @types/react @types/react-dom -D
+```js
+ module: {
+    rules: [
+      {
+        test: /\.(js|jsx|ts|tsx)$/,
+        loader: 'babel-loader',
+        options: {
+          presets: ['@babel/preset-flow'],// 支持 flow 语法
+        },
+      },
+    ],
+  },
+```
+
+设置环境变量
+
+```js
+ plugins: [
+    new webpack.DefinePlugin({
+      __DEV__: true,
+      __PROFILE__: true,
+      __EXPERIMENTAL__: true,
+      __VARIANT__: true,
+    }),
+  ],
+```
+
+## 修改 react 源码
+
+找到 react-17.0.2 文件
+SchedulerHostConfig.js
+
+```git
+// invariant(false, 'This module must be shimmed by a specific renderer.');
++ export * from './forks/ReactFiberHostConfig.dom'
+
 ```
