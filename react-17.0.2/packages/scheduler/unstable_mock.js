@@ -18,4 +18,5 @@ export {
   unstable_flushAll,
   unstable_yieldValue,
   unstable_advanceTime,
-} from './src/SchedulerHostConfig.js';
+//} from './src/SchedulerHostConfig.js';
+} from './src/forks/SchedulerHostConfig.mock';

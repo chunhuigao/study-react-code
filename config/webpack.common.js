@@ -5,7 +5,7 @@ const WebpackBar = require('webpackbar');
 const TersetWebpackPlugin = require('terser-webpack-plugin');
 const MiniCssPlugin = require('mini-css-extract-plugin');
 
-const MyWebpackPlugin = require('../plugins/index.js');
+const webpack = require('webpack');
 
 module.exports = {
   entry: {
@@ -26,13 +26,21 @@ module.exports = {
     }),
     new WebpackBar(),
     new MiniCssPlugin(),
-    new CssMinimizerWebpackPlugin(),
+    new webpack.DefinePlugin({
+      __DEV__: true,
+      __PROFILE__: true,
+      __EXPERIMENTAL__: true,
+      __VARIANT__: true,
+    }),
   ],
   module: {
     rules: [
       {
         test: /\.(js|jsx|ts|tsx)$/,
         loader: 'babel-loader',
+        options: {
+          presets: ['@babel/preset-flow'],
+        },
       },
       {
         test: /\.(css)$/,
@@ -86,11 +94,20 @@ module.exports = {
       }),
     ],
   },
-  externals: {
-    react: path.join(__dirname, '../react-17.0.2/packages/react'),
-    'react-dom': path.join(__dirname, '../react-17.0.2/packages/react-dom'),
-  },
+  externals: {},
   stats: {
     modules: false,
+  },
+  resolve: {
+    alias: {
+      react: path.join(__dirname, '../react-17.0.2/packages/react'),
+      shared: path.join(__dirname, '../react-17.0.2/packages/shared'),
+      'react-dom': path.join(__dirname, '../react-17.0.2/packages/react-dom'),
+      scheduler: path.join(__dirname, '../react-17.0.2/packages/scheduler'),
+      'react-reconciler': path.join(
+        __dirname,
+        '../react-17.0.2/packages/react-reconciler'
+      ),
+    },
   },
 };
