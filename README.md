@@ -108,7 +108,6 @@ export default function invariant(condition, format, a, b, c, d, e, f) {
     unstable_flushUntilNextPaint,
     unstable_flushAll,
     unstable_yieldValue,
-    unstable_advanceTime,
-  } from //} from './src/SchedulerHostConfig.js';
-  './src/forks/SchedulerHostConfig.mock';
+    unstable_advanceTime, //} from './src/SchedulerHostConfig.js';
+  } from './src/forks/SchedulerHostConfig.mock';
   ```
