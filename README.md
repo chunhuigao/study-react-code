@@ -55,13 +55,60 @@
   ],
 ```
 
-## 修改 react 源码
+## 修改 react-17.0.2 文件 react 源码
 
-找到 react-17.0.2 文件
-SchedulerHostConfig.js
+- react-17.0.2/packages/react-reconciler/src/ReactFiberHostConfig.js
 
-```git
+```js
 // invariant(false, 'This module must be shimmed by a specific renderer.');
 + export * from './forks/ReactFiberHostConfig.dom'
 
 ```
+
+- react-17.0.2/packages/react-reconciler/src/ReactFiberWorkLoop.new.js
+- react-17.0.2/packages/react-reconciler/src/ReactFiberWorkLoop.old.js
+
+  ```js
+  // import * as Scheduler from 'scheduler';
+  import * as Scheduler from 'scheduler/unstable_mock';
+  ```
+
+- react-17.0.2/packages/shared/invariant.js
+
+```js
+export default function invariant(condition, format, a, b, c, d, e, f) {
++ if (condition) return; // sy 加上这个
+
+  throw new Error(
+    "Internal React error: invariant() is meant to be replaced at compile " +
+      "time. There is no runtime version."
+  );
+}
+```
+
+- react-17.0.2/packages/shared/ReactSharedInternals.js
+
+```js
+
+// import React from 'react';
+// const ReactSharedInternals =
+//   React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+
++ import ReactSharedInternals  from 'react/src/ReactSharedInternals'
+```
+
+- react-17.0.2/packages/scheduler/unstable_mock.js
+
+  ```js
+  export {
+    unstable_flushAllWithoutAsserting,
+    unstable_flushNumberOfYields,
+    unstable_flushExpired,
+    unstable_clearYields,
+    unstable_flushUntilNextPaint,
+    unstable_flushAll,
+    unstable_yieldValue,
+    unstable_advanceTime,
+  } from //} from './src/SchedulerHostConfig.js';
+  './src/forks/SchedulerHostConfig.mock';
+  ```
