@@ -1,113 +1,70 @@
-## 前言
+# Getting Started with Create React App
 
-一个学习 react 源码的配置教程
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-- react 版本 17.0.2
-- 时间：2022.03.28
+## Available Scripts
 
-## 初始化
+In the project directory, you can run:
 
-### 修改 webpack.common.js
+### `npm start`
 
-配置别名
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-```js
- resolve: {
-    alias: {
-      react: path.join(__dirname, '../react-17.0.2/packages/react'),
-      shared: path.join(__dirname, '../react-17.0.2/packages/shared'),
-      'react-dom': path.join(__dirname, '../react-17.0.2/packages/react-dom'),
-      scheduler: path.join(__dirname, '../react-17.0.2/packages/scheduler'),
-      'react-reconciler': path.join(
-        __dirname,
-        '../react-17.0.2/packages/react-reconciler'
-      ),
-    },
-  },
-```
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-支持 flow 语法
+### `npm test`
 
-```js
- module: {
-    rules: [
-      {
-        test: /\.(js|jsx|ts|tsx)$/,
-        loader: 'babel-loader',
-        options: {
-          presets: ['@babel/preset-flow'],// 支持 flow 语法
-        },
-      },
-    ],
-  },
-```
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-设置环境变量
+### `npm run build`
 
-```js
- plugins: [
-    new webpack.DefinePlugin({
-      __DEV__: true,
-      __PROFILE__: true,
-      __EXPERIMENTAL__: true,
-      __VARIANT__: true,
-    }),
-  ],
-```
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-## 修改 react-17.0.2 文件 react 源码
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-- react-17.0.2/packages/react-reconciler/src/ReactFiberHostConfig.js
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-```js
-// invariant(false, 'This module must be shimmed by a specific renderer.');
-+ export * from './forks/ReactFiberHostConfig.dom'
+### `npm run eject`
 
-```
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-- react-17.0.2/packages/react-reconciler/src/ReactFiberWorkLoop.new.js
-- react-17.0.2/packages/react-reconciler/src/ReactFiberWorkLoop.old.js
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-  ```js
-  // import * as Scheduler from 'scheduler';
-  import * as Scheduler from 'scheduler/unstable_mock';
-  ```
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-- react-17.0.2/packages/shared/invariant.js
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-```js
-export default function invariant(condition, format, a, b, c, d, e, f) {
-+ if (condition) return; // sy 加上这个
+## Learn More
 
-  throw new Error(
-    "Internal React error: invariant() is meant to be replaced at compile " +
-      "time. There is no runtime version."
-  );
-}
-```
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-- react-17.0.2/packages/shared/ReactSharedInternals.js
+To learn React, check out the [React documentation](https://reactjs.org/).
 
-```js
+### Code Splitting
 
-// import React from 'react';
-// const ReactSharedInternals =
-//   React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-+ import ReactSharedInternals  from 'react/src/ReactSharedInternals'
-```
+### Analyzing the Bundle Size
 
-- react-17.0.2/packages/scheduler/unstable_mock.js
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-  ```js
-  export {
-    unstable_flushAllWithoutAsserting,
-    unstable_flushNumberOfYields,
-    unstable_flushExpired,
-    unstable_clearYields,
-    unstable_flushUntilNextPaint,
-    unstable_flushAll,
-    unstable_yieldValue,
-    unstable_advanceTime, //} from './src/SchedulerHostConfig.js';
-  } from './src/forks/SchedulerHostConfig.mock';
-  ```
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
